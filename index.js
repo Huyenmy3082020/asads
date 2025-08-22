@@ -5,6 +5,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const parser = new Parser();
 
+// Middleware để parse JSON body
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("✅ VNExpress API is running");
 });
@@ -24,6 +27,15 @@ app.get("/news", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+// Thêm POST route
+app.post("/", (req, res) => {
+  console.log("📩 Data received:", req.body);
+  res.json({
+    message: "✅ Data received successfully",
+    data: req.body,
+  });
 });
 
 app.listen(port, () => {
